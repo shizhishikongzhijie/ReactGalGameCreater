@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "antd": "^5.16.0",
     "axios": "^1.6.8",
     "concurrently": "^8.2.2",
     "cookie-parser": "^1.4.6",
@@ -13,6 +14,8 @@
     "express": "^4.19.2",
     "fs": "^0.0.1-security",
     "jade": "^1.11.0",
+    "less": "^4.2.0",
+    "less-loader": "^12.2.0",
     "morgan": "^1.10.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -25,7 +28,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server":"nodemon server/app.js localhost 3300",
+    "server": "nodemon server/app.js localhost 3300",
     "dev": "concurrently \"npm start\" \"npm run server\""
   },
   "eslintConfig": {
