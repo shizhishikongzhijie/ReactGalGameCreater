@@ -1,0 +1,24 @@
+{
+    "backgroundimg":{
+        "背景一":"https://i.loli.net/2021/07/09/YyXZ0jVL6jKJ9Wv.jpg",
+        "背景二": "https://i.loli.net/2021/07/09/YyXZ0jVL6jKJ9Wv.jpg",
+        "背景三": "https://i.loli.net/2021/07/09/YyXZ0jVL6jKJ9Wv"
+    },
+    "backgroundcolor":{
+        "背景一":"#000000",
+        "背景二": "#000000",
+        "背景三": "#000000"
+    },
+    "verticalpainting":{
+        "人物1":{
+            "生气":"https://i.loli.net/2021/07/09/YyXZ0jVL6jKJ9Wv.jpg",
+            "笑":"https://i.loli.net/2021/07/09/YyXZ0jVL6jKJ9Wv.jpg"
+        }
+    },
+    "audio":{
+        "人物1":{
+            "生气":"https://i.loli.net/2021/07/09/YyXZ0jVL6jKJ9Wv.jpg",
+            "笑":"https://i.loli.net/2021/07/09/YyXZ0jVL6jKJ9Wv.jpg"
+        }
+    }
+}
