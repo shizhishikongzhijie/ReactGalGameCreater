@@ -20,7 +20,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 // 添加CORS中间件以允许特定源的请求
 // 允许所有来源的请求
-app.use(cors({ origin: '*' }));
+const allowedOrigin = 'http://localhost:3000';
+app.use(cors({ origin: allowedOrigin }));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -42,7 +43,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-app.listen(3000, () => {
-  console.log('Server is running on port 3000');
+app.listen(3300, () => {
+  console.log('Server is running on port 3300');
 });
 module.exports = app;

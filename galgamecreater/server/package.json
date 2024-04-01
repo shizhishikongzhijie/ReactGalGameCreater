@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "nodemon ./app.js localhost 3000"
+    "dev": "nodemon ./app.js localhost 3300"
   },
   "dependencies": {
     "concurrently": "^8.2.2",

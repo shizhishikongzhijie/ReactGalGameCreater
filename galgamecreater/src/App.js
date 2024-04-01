@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 function file(){
-  axios.get('http://localhost:3000/file')
+  axios.get('http://localhost:3300/file')
   .then(function (response) {
     console.log(response);
   })
