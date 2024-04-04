@@ -1,46 +1,61 @@
-// 定义窗口宽高变量，确保变量在使用前被正确定义
-@windowWidth: 1600;
-@windowHeight: 900; // 假设的窗口宽高，根据实际情况进行调整
-
 // 优化后的样式定义
 .headerStyle {
+    margin: 10px;
     text-align: center;
-    color: #fff;
-    height: 10%;
     padding-inline: 48px; // 保证单位为px，提高可读性
     line-height: 64px; // 移除引号，直接使用数值
-    background-color: #4096ff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .contentStyle {
     text-align: center;
+    margin-bottom: 10px;
     min-height: 120px; // 明确单位为px
     line-height: 120px; // 移除引号，直接使用数值
     color: #fff;
-    height: calc(@windowWidth * (1600/2560)); // 确保变量使用正确
-    width: calc(@windowHeight * (2560/1600)); // 确保变量使用正确
     background-color: #0958d9;
 }
 
 .siderStyle {
+    margin-bottom: 10px;
     text-align: center;
     line-height: 120px; // 移除引号，直接使用数值
     color: #fff;
-    background-color: #1677ff;
+    width: -webkit-fill-available;
+    background-color: #1677ff !important;
 }
 
 .footerStyle {
     text-align: center;
     color: #fff;
-    height: auto; // 明确height为auto，以便动态调整高度
+    background-color: rgb(245,245,245);
+    border-radius: 5px;
+    //开启滚动条
+    overflow-y: scroll;
+
+}
+
+::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 3px;
     background-color: #4096ff;
+
 }
 
 .layoutStyle {
     border-radius: 8px; // 添加px单位，提高可读性
     overflow: hidden;
+    width: -webkit-fill-available !important;
+    height: -webkit-fill-available !important;
     // 使用媒体查询进行响应式设计调整，而非固定高度
-    @media (max-width: 1200px) {
-        height: 80vh; // 举例，根据实际需求调整
-    }
+    // @media (max-width: 1200px) {
+    //     height: 80vh; // 举例，根据实际需求调整
+    // }
 }
