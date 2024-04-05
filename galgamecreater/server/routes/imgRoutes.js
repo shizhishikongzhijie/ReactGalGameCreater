@@ -88,12 +88,12 @@ router.post('/', upload.single('image'), async (req, res) => {
             const key = `bg${i}`;
             console.log(`key: ${key}`);
             if (jsonDataCopy.backgroundimg[key]) {
-                console.log('i:'+i);
+                console.log('i:' + i);
                 lastKey = key;
-                lastCount = i+1;
+                lastCount = i + 1;
             }
         }
-        console.log('lastKey:'+lastKey+' lastCount:'+ lastCount);
+        console.log('lastKey:' + lastKey + ' lastCount:' + lastCount);
         // 获取当前backgroundimg对象的所有内容
         const currentBackgroundImg = jsonDataCopy.backgroundimg;
         // 构建新的键值对，键为新的图片名称，值为新上传的图片路径
@@ -108,20 +108,22 @@ router.post('/', upload.single('image'), async (req, res) => {
         console.log('jsonDataCopy:', JSON.stringify(jsonDataCopy, null, 2));
 
         // 发送修改后的JSON数据到/file，使用POST请求
-        request.post({
-            url: 'http://localhost:3300/file',
-            json: true,
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: jsonDataCopy
-        }, (err, response, body) => {
-            if (err) {
-                console.error(err);
-                console.error('更新JSON数据时发生错误。');
-                return res.status(500).send('更新JSON数据时发生错误。');
-            }
-            res.send('文件上传成功！');
+        const updataData = await new Promise((resolve, reject) => {
+            request.post({
+                url: 'http://localhost:3300/file',
+                json: true,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonDataCopy
+            }, (err, response, body) => {
+                if (err) {
+                    console.error(err);
+                    console.error('更新JSON数据时发生错误。');
+                    return res.status(500).send('更新JSON数据时发生错误。');
+                }
+                res.send('文件上传成功！');
+            })
         });
     } catch (error) {
         console.error(error);
