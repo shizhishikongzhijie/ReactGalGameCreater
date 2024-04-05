@@ -1,4 +1,4 @@
-# 窗口大小
+# 一. 窗口大小
 
 ## window.innerWidth:
 
@@ -18,12 +18,11 @@
 优点：具有良好的继承性和灵活性，可以根据父容器的尺寸自动调整子元素的大小，有助于构建灵活的响应式布局。
 缺点：依赖于父容器的尺寸定义，如果父容器尺寸未明确指定或计算不准确，可能会导致子元素尺寸异常。此外，在多层嵌套的布局中，需要确保所有相关父级元素的尺寸计算正确。
 
-# JSON在expressJs中的使用
+# 二. JSON在expressJs中的使用
 
 ## node.js 下最出名的web框架 express ,之前低版本(4.0以下)貌似需要依赖 bodyParser 包来解析请求体,
 
 - Express 3.x和4.x版本的区别
-
 - 后来的版本把 bodyParser 继承进去,
 - 需要在express 配置项里 user(express.bodyParser( { keepExtensions: true, uploadDir: '/tmp' }))
 
@@ -37,12 +36,11 @@ app.configure(function () {
     app.use(express.bodyParser({ keepExtensions: true, uploadDir: '/tmp' }));
 });
 ```
-- // 配置解析 数据格式为表单数据的请求体 的中间件 
+
+- // 配置解析 数据格式为表单数据的请求体 的中间件
 - app.use(express.urlencoded({ extended: false }))
 - expres服务器默认无法解析数据格式为表单数据的请求体，因此express才提供了这个中间件，让我们配置，从而能够解析req. - - body 中表单格式数据。而这个中间件内部，其实是在配置body-parser属性，所以我的每个request请求都是要经过这个过滤器解- 析的，也就是说，这个中间件不能解析json格式字符串？？？？
-
 - 经过网上查阅，我找到了如下解释
-
 - body-parser的urlencoded方法顾名思义就是把传来的数据当做url来处理，也就是像querystring一样，所以对于传过来的json 数据，没有识别到切割key和value的标志，就把所有都当做key来处理
 - 真相大白。body-parser无法解析请求体中的JSON字符串，所以当收到JSON格式的参数时，因无法解析，所以req.body就为空了
 
@@ -105,4 +103,60 @@ app.post('/post', function (req, res) {
         });
     }
 });
+```
+
+# 三. 当上传多张图片时，需要控制进程数，特别是修改文件的同步异步问题
+
+## 由于nodeMon 监听文件变化，导致修改文件时，会重启进程，导致报错
+
+```js
+[1] POST /img 200 165.169 ms - 21
+[1] POST /img 200 169.898 ms - 21
+[1] POST /img 200 186.822 ms - 21
+实际上前端只有一个请求，但是后端识别到了多个请求，每次请求改变文件都会导致nodemon重启
+```
+
+### [nodemon] restarting due to changes...
+
+- 当上传多张图片，实际上nodejs检测到了多次上传，导致修改了文件，nodejs重启，一些修改未能完成，导致伪覆盖
+- Node.js应用程序的核心运行机制是单线程的，即只有一个主线程执行JavaScript代码并通过事件循环处理异步操作。
+- Node.js利用操作系统提供的多线程能力，在后台处理I/O等异步任务，从而保持主线程的高效率。
+- Node.js支持通过child_process和cluster模块创建多进程架构，以利用多核CPU，实现并行处理和负载均衡。
+
+#### 当多个请求到达Node.js服务器时，这些请求并不意味着会启动多个Node.js实例。在一个典型的Node.js服务器中，无论有多少个并发请求，都由同一个Node.js进程（即单一主线程）通过事件循环来处理。这里的关键在于Node.js的非阻塞I/O和事件驱动特性：
+
+1. (1). 非阻塞I/O：当Node.js接收到一个涉及I/O操作（如读取文件、数据库查询、网络通信等）的请求时，它不会等待这些操作完成，而是立即将控制权交还给事件循环，继续处理其他任务。同时，Node.js会将这些I/O操作交给操作系统底层的线程池去执行。当I/O操作完成时，操作系统会通知Node.js，此时事件循环会将相应的回调函数推入事件队列，等待主线程在未来的一个合适时机执行。
+2. (2). 事件驱动：Node.js的主线程不断地从事件队列中取出事件（即已完成的异步任务的回调函数）来执行。这样，即使在处理一个耗时的I/O操作期间，主线程也可以继续处理其他请求，只要这些请求不需要等待同一I/O操作的结果。这就是Node.js能够高效处理大量并发请求的原因。
+
+### 如何解决？
+
+1. (1). 加入nodemon忽略文件：
+
+```json
+"scripts": {
+    "start": "node ./bin/www",
+    "dev": "nodemon ./app.js localhost 3300 -i public/ -i data.json"
+  },
+```
+
+2. (2). 文件修改异步变为同步，fs.writeFile => fs.writeFileSync
+
+```js
+//异步函数*（err,jsonString)={}是回调函数
+fs.readFile('./data.json', 'utf8', (err, jsonString) => {
+        if (err) {
+            console.error('Error reading file:', err);
+            return res.status(500).json({ error: 'Error reading file' });
+        }
+        try {
+            const data = jsonString;
+            res.json(data);//res.json()方法会自动设置Content-Type响应头为application/json。
+        } catch (err) {
+            console.error('Error parsing JSON string:', err);
+            res.status(500).json({ error: 'Error parsing JSON string' });
+        }
+    });
+//同步函数
+const jsonString = fs.readFileSync('./data.json', 'utf8');
+const data = JSON.parse(jsonString);
 ```

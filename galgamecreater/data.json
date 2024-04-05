@@ -1,1 +1,18 @@
-{"title":"测试","backgroundimg":{"bg2":"images/image-1712244826852.png"},"backgroundcolor":{"背景一":"#000000","背景二":"#000000","背景三":"#000000"},"verticalpainting":{"人物1":{"生气":"https://i.loli.net/2021/07/09/YyXZ0jVL6jKJ9Wv.jpg","笑":"https://i.loli.net/2021/07/09/YyXZ0jVL6jKJ9Wv.jpg"}}}
+{
+    "title": "测试",
+    "backgroundimg": {
+        "bg1": "images/image-1712298313048.png",
+        "bg2": "images/image-1712298313051.png"
+    },
+    "backgroundcolor": {
+        "背景一": "#000000",
+        "背景二": "#000000",
+        "背景三": "#000000"
+    },
+    "verticalpainting": {
+        "人物1": {
+            "生气": "https://i.loli.net/2021/07/09/YyXZ0jVL6jKJ9Wv.jpg",
+            "笑": "https://i.loli.net/2021/07/09/YyXZ0jVL6jKJ9Wv.jpg"
+        }
+    }
+}

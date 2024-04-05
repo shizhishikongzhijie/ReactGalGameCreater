@@ -28,14 +28,12 @@ const ImgPart = () => {
     useEffect(() => {
         getFile();
     }, [])
-    function getFile() {
-        axios.get('http://localhost:3300/file')
+    const  getFile= async ()=> {
+    await   axios.get('http://localhost:3300/file')
             .then(function (response) {
                 const data = JSON.parse(response.data);
                 imgMap(data);
                 setData(data);
-
-
             })
             .catch(function (error) {
                 console.log(error);
